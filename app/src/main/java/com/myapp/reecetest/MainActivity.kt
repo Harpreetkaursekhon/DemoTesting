@@ -7,12 +7,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.myapp.reecetest.adapter.BreedAdapter
+import com.myapp.reecetest.databinding.ActivityMainBinding
 import com.myapp.reecetest.model.BreedResponseItem
 import com.myapp.reecetest.repository.BreedRepo
 import com.myapp.reecetest.viewmodel.BreedViewModel
 import com.myapp.reecetest.viewmodel.BreedViewModelFactory
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: BreedViewModel
     private lateinit var breedRepo: BreedRepo
     private lateinit var breedAdapter: BreedAdapter
@@ -21,7 +23,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding= ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
 
         initRecyclerView()
         breedRepo = BreedRepo()
@@ -35,9 +40,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        recyclerView=findViewById(R.id.recyclerview)
         breedAdapter= BreedAdapter(this, ArrayList())
-        recyclerView.apply {
+        binding.recyclerview.apply {
             setHasFixedSize(true)
             layoutManager= LinearLayoutManager(this@MainActivity)
             adapter=breedAdapter
